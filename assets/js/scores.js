@@ -1,0 +1,3 @@
+// Highscores
+
+arrayHighscores = [];
