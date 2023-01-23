@@ -59,7 +59,7 @@ questionList.appendChild(li4);
 
 
     
-Questions.forEach(createQuestion())
+Questions.forEach(createQuestion(qNum))
 createQuestion();
 
 
