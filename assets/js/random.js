@@ -62,7 +62,9 @@ function showHighscores() {
   for (var i = 0; i < highscores.length; i++) {
     var highscore = highscores[i];
     var li =
-function addElement() {
+
+
+    function addElement() {
     // create a new div element
     const newDiv = document.createElement("div");
 

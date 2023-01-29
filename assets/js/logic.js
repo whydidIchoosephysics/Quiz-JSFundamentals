@@ -1,123 +1,102 @@
-buttonStart = document.getElementById("start");
-timerShow = document.getElementById("time");
+const buttonStart = document.getElementById("start");
+const timerShow = document.getElementById("time");
 
-questionArea = document.getElementById("questions");
-questionText = document.getElementById("question-title");
-questionChoices = document.getElementById("choices");
+const questionArea = document.getElementById("questions");
+const questionText = document.getElementById("question-title");
+const questionChoices = document.getElementById("choices");
+let qNum = 0;
 
 purple = "#8570a5";
 
-
 // The startGame function is called when the start button is clicked
-function startGame() {
-    isWin = false;
-    timerCount = 120;
-    // Prevents start button from being clicked when round is in progress
-    startButton.disabled = true;
-    // renderBlanks()
-    // startTimer()
-};
-
-
-
-
-
 
 // Displaying a question:
-
-let qNum = 0;
 
 // Get Question Information
 // Chooses one of the saved questions and returns all the options within it, Q Number can be changed when calling the function
 
 function getQuestion(qNum) {
-    let question = Questions[qNum];
+  questionText.innerText = "";
+  choices.innerHTML = "";
 
-    let questionText = question.question;
-    let ans1 = question.answer1;
-    let ans2 = question.answer2;
-    let ans3 = question.answer3;
-    let ans4 = question.answer4;
-    let corr = question.correct;
+  let question = Questions[qNum];
 
+  questionText.innerText = question.question;
 
-    return { questionText, ans1, ans2, ans3, ans4, corr };
-};
+  let questionList = document.createElement("div");
+  questionChoices.appendChild(questionList);
 
-console.log(getQuestion(qNum).questionText, getQuestion(qNum).ans3)
-console.log("---")
+  question.answers.forEach(function (question) {
+    let questionButton = document.createElement("button");
+    questionButton.textContent = question;
+    questionList.appendChild(questionButton);
+
+    questionButton.addEventListener("click", function (event) {
+      const isAnswerCorrect = correctAnswers.includes(event.target.innerText);
+
+      qNum++;
+      getQuestion(qNum);
+
+      if (!isAnswerCorrect) {
+        console.log("false Answer");
+        // subtract time from timer here
+      }
+    });
+  });
+}
+
+getQuestion(qNum);
+
+function startGame() {
+  isWin = false;
+  timerCount = 120;
+  // Prevents start button from being clicked when round is in progress
+  startButton.disabled = true;
+  // renderBlanks()
+  // startTimer()
+}
 
 // Dynamically created Question ELements - <h3> Question Text + <li> elements in an <ul>
 
 // function createQuestion() {
 
-    questionArea.setAttribute("class", "visible");
+questionArea.setAttribute("class", "visible");
 
-    let questionList = document.createElement("ol");
-    let li1 = document.createElement("li");
-    let li2 = document.createElement("li");
-    let li3 = document.createElement("li");
-    let li4 = document.createElement("li");
+let buttonSubmit = document.createElement("BUTTON");
+buttonSubmit.classList.add("submit");
+buttonSubmit.textContent = "Next";
 
+questionArea.append(buttonSubmit);
 
-    questionText.textContent = getQuestion(qNum).questionText;
-    li1.textContent = getQuestion(qNum).ans1;
-    li2.textContent = getQuestion(qNum).ans2;
-    li3.textContent = getQuestion(qNum).ans3;
-    li4.textContent = getQuestion(qNum).ans4;
+function selectAnswer() {
+  // let listElements = questionArea.querySelectorAll("li");
+  //     for (let k = 0, k < listElements.listElements.length: k++) {
+  //         listElements[k].addEventListener("click", function() {
+  //             for (let j in listElements) {
+  //                 listElements[j].style.color = "grey";
+  //             }
+  //             this.style.color = "purple";
+  //         });
+  //     }
+  //   li1.style.color = "white";
+  //   li1.style.backgroundColor = "purple";
+}
 
-    questionChoices.appendChild(questionList);
-    questionList.appendChild(li1);
-    questionList.appendChild(li2);
-    questionList.appendChild(li3);
-    questionList.appendChild(li4);
+// object.addEventListener("click", myScript);
+// setAttribute('data-foo', 'Hello World!')
+// li1.addEventListener("click", selectAnswer)
+// li2.addEventListener("click", selectAnswer)
+// li3.style.color = "white";
+// li3.style.backgroundColor = "purple";
 
-
-    let buttonSubmit = document.createElement("BUTTON");
-    buttonSubmit.classList.add("submit");
-    buttonSubmit.textContent = "Next";
-
-    questionArea.append(buttonSubmit);
-
-
-
-    function selectAnswer() {
-
-        // let listElements = questionArea.querySelectorAll("li");
-        //     for (let k = 0, k < listElements.listElements.length: k++) {
-        //         listElements[k].addEventListener("click", function() {
-        //             for (let j in listElements) {
-        //                 listElements[j].style.color = "grey";
-        //             }
-        //             this.style.color = "purple";
-        //         });
-        //     }
-
-        li1.style.color = "white";
-        li1.style.backgroundColor = "purple";
-    };
-
-
-    // object.addEventListener("click", myScript);
-    // setAttribute('data-foo', 'Hello World!')
-    // li1.addEventListener("click", selectAnswer)
-    // li2.addEventListener("click", selectAnswer)
-    li3.style.color = "white";
-    li3.style.backgroundColor = "purple";
-
-    // selectAnswer()
+// selectAnswer()
 
 // };
-
-
 
 // // Questions.forEach(createQuestion(qNum))
 // createQuestion();
 
-
-
 // event.preventDefault don't forget
-
 
 // Attach event listener to start button to call startGame function on click
 buttonStart.addEventListener("click", startGame);
